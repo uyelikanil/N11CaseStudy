@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.anilyilmaz.n11casestudy.ui.theme.N11CaseStudyTheme
+import com.anilyilmaz.n11casestudy.core.designsystem.theme.N11CaseStudyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
