@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -29,6 +30,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
         }
     }
     compileOptions {
@@ -40,6 +45,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -49,11 +55,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -65,4 +73,11 @@ dependencies {
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
+    implementation(libs.dagger.hilt)
+    ksp(libs.dagger.hilt.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp.logging)
+    implementation(libs.androidx.paging.compose)
 }
