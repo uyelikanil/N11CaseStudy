@@ -80,4 +80,7 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp.logging)
     implementation(libs.androidx.paging.compose)
+    implementation(libs.room)
+    implementation(libs.room.coroutines)
+    ksp(libs.room.compiler)
 }
