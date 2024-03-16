@@ -17,9 +17,9 @@ class UserSearchRepositoryImpl @Inject constructor(
 ): UserSearchRepository {
     @OptIn(ExperimentalPagingApi::class)
     override fun searchUsers(query: String): Flow<PagingData<UserEntity>> {
-        val pagingSourceFactory = { n11Database.userDao().usersByQuery(query) }
+        val pagingSourceFactory = { n11Database.userDao().users() }
         return Pager(
-            config = PagingConfig(pageSize = 30, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 30),
             remoteMediator = GithubRemoteMediator(
                 query,
                 githubDataSource,

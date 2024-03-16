@@ -12,8 +12,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(repos: List<UserEntity>)
 
-    @Query("SELECT * FROM users WHERE " + "login LIKE :query")
-    fun usersByQuery(query: String): PagingSource<Int, UserEntity>
+    @Query("SELECT * FROM users ORDER BY id desc")
+    fun users(): PagingSource<Int, UserEntity>
 
     @Query("DELETE FROM users")
     suspend fun clearUsers()
