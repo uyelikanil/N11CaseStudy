@@ -61,6 +61,8 @@ android {
 dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
@@ -84,4 +86,7 @@ dependencies {
     implementation(libs.room.coroutines)
     implementation(libs.room.paging)
     ksp(libs.room.compiler)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.coil)
 }

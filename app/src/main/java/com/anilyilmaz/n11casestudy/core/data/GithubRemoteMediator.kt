@@ -48,28 +48,31 @@ class GithubRemoteMediator(
         }
 
         try {
-            Log.e("TAG", "ANILYILMAZ: " )
-            val users = dataSource.searchUsers(
-                query = query,
-                page = page,
-                perPage = state.config.pageSize
-            ).items.map { it.toUserEntity() }
-            val endOfPaginationReached = users.isEmpty()
+            if(query.isNotEmpty()) {
+                val users = dataSource.searchUsers(
+                    query = query,
+                    page = page,
+                    perPage = state.config.pageSize
+                ).items.map { it.toUserEntity() }
+                val endOfPaginationReached = users.isEmpty()
 
-            n11Database.withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    n11Database.remoteKeyDao().clearRemoteKeys()
-                    n11Database.userDao().clearUsers()
+                n11Database.withTransaction {
+                    if (loadType == LoadType.REFRESH) {
+                        n11Database.userDao().clearUsers()
+                        n11Database.remoteKeyDao().clearRemoteKeys()
+                    }
+                    val prevKey = if (page == 1) null else page - 1
+                    val nextKey = if (endOfPaginationReached) null else page + 1
+                    val keys = users.map {
+                        RemoteKeyEntity(userId = it.id, prevKey = prevKey, nextKey = nextKey)
+                    }
+                    n11Database.remoteKeyDao().insertAll(keys)
+                    n11Database.userDao().insertAll(users)
                 }
-                val prevKey = if (page == 1) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = users.map {
-                    RemoteKeyEntity(userId = it.id, prevKey = prevKey, nextKey = nextKey)
-                }
-                n11Database.remoteKeyDao().insertAll(keys)
-                n11Database.userDao().insertAll(users)
+                return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+            } else {
+                return MediatorResult.Success(endOfPaginationReached = true)
             }
-            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
