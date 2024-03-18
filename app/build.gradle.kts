@@ -55,7 +55,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
 }
 
 dependencies {
@@ -70,10 +69,10 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
+    api(libs.junit)
+    api(libs.androidx.test.runner)
+    api(libs.kotlinx.coroutines.test)
+    api(libs.androidx.test.ext.junit)
     debugImplementation(libs.ui.tooling)
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)
