@@ -6,10 +6,12 @@ import com.anilyilmaz.n11casestudy.feature.home.HomeRoute
 
 const val HOME_ROUTE = "home"
 
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(
+    onUserClick: (String?) -> Unit,
+) {
     composable(
         route = HOME_ROUTE
     ) {
-        HomeRoute()
+        HomeRoute(onUserClick = onUserClick)
     }
 }

@@ -10,8 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.anilyilmaz.n11casestudy.feature.home.navigation.HOME_ROUTE
 import com.anilyilmaz.n11casestudy.feature.home.navigation.homeScreen
+import com.anilyilmaz.n11casestudy.feature.userdetail.navigation.navigateToUserDetail
+import com.anilyilmaz.n11casestudy.feature.userdetail.navigation.userDetailScreen
 
 @Composable
 fun N11App() {
@@ -44,6 +47,18 @@ private fun N11NavHost(
         navController = navController,
         startDestination = HOME_ROUTE
     ) {
-        homeScreen()
+        homeScreen(
+            onUserClick = { username ->
+                navController.navigateToUserDetail(
+                    username = username,
+                    navOptions = navOptions {
+                        launchSingleTop = true
+                    }
+                )
+            }
+        )
+        userDetailScreen {
+            navController.popBackStack()
+        }
     }
 }

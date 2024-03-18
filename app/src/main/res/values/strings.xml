@@ -2,4 +2,8 @@
     <string name="app_name">N11 Case Study</string>
     <string name="search">Search</string>
     <string name="search_user">Search user</string>
+    <string name="an_error_occurred_while_loading_user_detail">An error occurred while loading user detail!</string>
+    <string name="public_repositories">public repositories</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
 </resources>
